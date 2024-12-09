@@ -42,13 +42,13 @@ export default function Hero() {
         </div>
         <h1
           ref={titleRef}
-          className="text-6xl md:text-8xl font-bold mb-8 bg-gradient-to-r from-light via-accent to-light bg-clip-text text-transparent animate-gradient"
+          className="text-4xl sm:text-6xl md:text-8xl font-bold mb-8 bg-gradient-to-r from-light via-accent to-light bg-clip-text text-transparent animate-gradient"
         >
           config<span className="text-accent">Manager</span>
         </h1>
         <p
           ref={contentRef}
-          className="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto"
+          className="text-lg sm:text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto"
         >
           A modern, type-safe configuration management solution for Go applications.
         </p>
