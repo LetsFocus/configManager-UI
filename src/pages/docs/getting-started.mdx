@@ -1,0 +1,60 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Getting Started with configManager
+---
+
+# Getting Started with configManager
+
+Welcome to the configManager documentation! This guide will help you get started with using configManager in your Go projects.
+
+## Installation
+
+To install configManager, run:
+
+```bash
+go get github.com/LetsFocus/configManager
+```
+
+## Basic Usage
+
+Here's a simple example of how to use configManager:
+
+```go
+package main
+
+import (
+    "fmt"
+    "github.com/LetsFocus/configManager"
+)
+
+type Config struct {
+    DBUrl      string `env:"DB_URL" default:"postgres://localhost:5432"`
+    APIToken   string `env:"API_TOKEN" required:"true"`
+    ServerPort int    `env:"SERVER_PORT" default:"8080"`
+}
+
+func main() {
+    cm := configManager.New()
+    
+    var config Config
+    if err := cm.Unmarshal(&config); err != nil {
+        panic(err)
+    }
+    
+    fmt.Printf("Configuration loaded: %+v\n", config)
+}
+```
+
+## Configuration Sources
+
+configManager supports multiple configuration sources:
+
+1. Environment Variables
+2. .env Files
+3. JSON Files
+4. YAML Files
+
+The loading priority is:
+1. Environment Variables (highest priority)
+2. .env Files
+3. JSON/YAML Files (lowest priority)

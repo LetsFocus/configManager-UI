@@ -1,0 +1,30 @@
+---
+const links = [
+  { href: "/", text: "Home" },
+  { href: "/docs/getting-started", text: "Documentation" },
+  { href: "/examples", text: "Examples" },
+  { href: "https://github.com/LetsFocus/configManager", text: "GitHub" },
+];
+---
+
+<nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md shadow-sm z-50">
+  <div class="container mx-auto px-4 py-4">
+    <div class="flex justify-between items-center">
+      <a href="/" class="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
+        configManager
+      </a>
+      <div class="space-x-8">
+        {links.map(link => (
+          <a 
+            href={link.href}
+            class="text-gray-600 hover:text-primary-600 transition-colors duration-200 relative group"
+          >
+            {link.text}
+            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-primary-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200">
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</nav>

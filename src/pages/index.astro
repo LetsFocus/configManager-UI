@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero';
+import Features from '../components/Features';
+import CodePreview from '../components/CodePreview';
+
+const exampleCode = `package main
+
+import "github.com/LetsFocus/configManager"
+
+type Config struct {
+    DBUrl      string \`env:"DB_URL" default:"postgres://localhost:5432"\`
+    APIToken   string \`env:"API_TOKEN" required:"true"\`
+    ServerPort int    \`env:"SERVER_PORT" default:"8080"\`
+}
+
+func main() {
+    var config Config
+    if err := configManager.Load(&config); err != nil {
+        panic(err)
+    }
+}`;
+---
+
+<Layout title="configManager - Modern Configuration Management for Go">
+  <main>
+    <Hero client:load />
+    <Features client:visible />
+    <section class="py-24 bg-dark text-light">
+      <div class="max-w-4xl mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-12 text-center">Simple to Use</h2>
+        <CodePreview client:visible code={exampleCode} />
+      </div>
+    </section>
+  </main>
+</Layout>
+

@@ -1,0 +1,45 @@
+---
+import NavBar from '../components/NavBar.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="ConfigManager Documentation" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} - configManager Docs</title>
+  </head>
+  <body class="bg-gray-50">
+    <NavBar />
+    <div class="container mx-auto px-4 pt-24">
+      <div class="flex gap-8">
+        <aside class="w-64 fixed h-[calc(100vh-6rem)] overflow-y-auto">
+          <nav class="space-y-2">
+            <a href="/docs/getting-started" class="block py-2 px-4 rounded hover:bg-primary-50 text-gray-700 hover:text-primary-600">
+              Getting Started
+            </a>
+            <a href="/docs/configuration" class="block py-2 px-4 rounded hover:bg-primary-50 text-gray-700 hover:text-primary-600">
+              Configuration
+            </a>
+            <a href="/docs/advanced" class="block py-2 px-4 rounded hover:bg-primary-50 text-gray-700 hover:text-primary-600">
+              Advanced Usage
+            </a>
+          </nav>
+        </aside>
+        <main class="ml-72 w-[calc(100%-18rem)] min-h-screen pb-16">
+          <article class="prose prose-lg max-w-none">
+            <slot />
+          </article>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
