@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
+// Fetch the 'docs' collection
 const docs = await getCollection('docs');
 ---
 
@@ -22,7 +23,7 @@ const docs = await getCollection('docs');
   <!-- Main Content Section -->
   <section class="relative py-16 bg-dark text-light">
     <div class="max-w-7xl mx-auto px-4 lg:px-12 flex flex-col lg:flex-row gap-16 lg:gap-32">
-
+      
       <!-- Sidebar (for large screens) -->
       <div class="hidden lg:block w-1/4 sticky top-16 pr-8">
         <div class="space-y-6">
