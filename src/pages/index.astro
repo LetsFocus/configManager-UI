@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
 import CodePreview from '../components/CodePreview';
+import Footer from '../components/Footer';
+
 
 const exampleCode = `package main
 
@@ -32,6 +34,7 @@ func main() {
         <CodePreview client:visible code={exampleCode} />
       </div>
     </section>
+    <Footer/>
   </main>
 </Layout>
 

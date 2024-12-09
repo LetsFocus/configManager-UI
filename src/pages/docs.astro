@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const docs = await getCollection('docs');
+---
+
+<Layout>
+  <!-- Header Section -->
+  <header class="bg-dark py-16 text-center relative z-10">
+    <div class="absolute inset-0 bg-gradient-to-b from-dark via-accent/5 to-dark"></div>
+    <div class="max-w-7xl mx-auto px-4 lg:px-12">
+      <h1 class="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-accent to-blue-600 bg-clip-text text-transparent">
+        Documentation
+      </h1>
+      <p class="text-lg md:text-xl text-gray-400 mt-4 max-w-3xl mx-auto">
+        Explore guides and resources to get started and master ConfigManager.
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content Section -->
+  <section class="relative py-16 bg-dark text-light">
+    <div class="max-w-7xl mx-auto px-4 lg:px-12 flex flex-col lg:flex-row gap-16 lg:gap-32">
+
+      <!-- Sidebar (for large screens) -->
+      <div class="hidden lg:block w-1/4 sticky top-16 pr-8">
+        <div class="space-y-6">
+          <h3 class="text-2xl font-semibold text-light">Documentation</h3>
+          <ul class="space-y-2">
+            {docs.map((doc) => (
+              <li key={doc.slug}>
+                <a
+                  href={`/docs/${doc.slug}`}
+                  class="text-lg hover:text-accent transition-colors duration-300"
+                >
+                  {doc.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Documentation Preview Section -->
+      <div class="w-full lg:w-3/4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {docs.map((doc) => (
+            <a
+              href={`/docs/${doc.slug}`}
+              class="group p-8 rounded-2xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              <div class="w-16 h-16 rounded-xl bg-accent/20 text-accent flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                📄
+              </div>
+              <h3 class="text-xl font-semibold mb-4 text-light">{doc.data.title}</h3>
+              <p class="text-gray-400">{doc.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

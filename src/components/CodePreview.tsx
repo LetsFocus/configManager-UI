@@ -22,7 +22,7 @@ export default function CodePreview({ code }: Props) {
       viewport={{ once: true }}
       className="relative group"
     >
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-accent to-blue-600 rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-accent to-blue-400 rounded-xl opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
       <div className="relative">
         <pre className="bg-dark/80 backdrop-blur-sm rounded-xl p-6 font-mono text-sm leading-relaxed overflow-x-auto">
           <code className="text-light">{code}</code>
