@@ -6,9 +6,15 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), mdx(), react()],
-  markdown: {
-    shikiConfig: {
-      theme: 'dracula'
-    }
-  }
+  content: {
+    collections: {
+      docs: {
+        directory: './src/content/docs',
+        schema: ({ z }) => z.object({
+          title: z.string(),
+          description: z.string().optional(),
+        }),
+      },
+    },
+  },
 });

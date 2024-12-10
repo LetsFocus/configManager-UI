@@ -1,45 +1,21 @@
 ---
-import NavBar from '../components/NavBar.astro';
-
-interface Props {
-  title: string;
-}
-
-const { title } = Astro.props;
+// Props for title and content.
+const { title, children } = Astro.props;
 ---
 
-<!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
   <head>
+    <title>{title} | Documentation</title>
     <meta charset="UTF-8" />
-    <meta name="description" content="ConfigManager Documentation" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} - configManager Docs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
-  <body class="bg-gray-50">
-    <NavBar />
-    <div class="container mx-auto px-4 pt-24">
-      <div class="flex gap-8">
-        <aside class="w-64 fixed h-[calc(100vh-6rem)] overflow-y-auto">
-          <nav class="space-y-2">
-            <a href="/docs/getting-started" class="block py-2 px-4 rounded hover:bg-primary-50 text-gray-700 hover:text-primary-600">
-              Getting Started
-            </a>
-            <a href="/docs/configuration" class="block py-2 px-4 rounded hover:bg-primary-50 text-gray-700 hover:text-primary-600">
-              Configuration
-            </a>
-            <a href="/docs/advanced" class="block py-2 px-4 rounded hover:bg-primary-50 text-gray-700 hover:text-primary-600">
-              Advanced Usage
-            </a>
-          </nav>
-        </aside>
-        <main class="ml-72 w-[calc(100%-18rem)] min-h-screen pb-16">
-          <article class="prose prose-lg max-w-none">
-            <slot />
-          </article>
-        </main>
-      </div>
-    </div>
+  <body class="bg-dark text-light font-sans">
+    <header class="py-6 bg-accent text-center">
+      <h1 class="text-4xl font-bold">{title}</h1>
+    </header>
+    <main class="max-w-4xl mx-auto p-8">{children}</main>
+    <footer class="py-6 bg-accent/10 text-center text-gray-400">
+      © 2024 ConfigManager Docs
+    </footer>
   </body>
 </html>

@@ -1,0 +1,123 @@
+---
+// Fetch all docs from the collection
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const docs = await getCollection('docs');
+  return docs.map((doc) => ({
+    params: { slug: doc.slug }, // Maps to the [slug].astro file
+  }));
+}
+
+const docs = await getCollection('docs');
+const { slug } = Astro.params;
+
+// Find the matching doc by its slug
+const doc = docs.find((d) => d.slug === slug);
+
+if (!doc) {
+  throw new Error(`Document not found for slug: ${slug}`);
+}
+
+// Content of the markdown doc
+const content = doc.body; // Assuming body contains the markdown content
+---
+
+<Layout>
+  <section class="min-h-screen py-16 bg-dark text-light mt-20">
+    <div class="max-w-7xl mx-auto px-4 lg:px-12">
+      <!-- Header and Search Section -->
+      <div class="flex flex-col lg:flex-row gap-12">
+        <!-- Sidebar Navigation (for headers inside the doc) -->
+        <div class="w-full lg:w-1/4 bg-gray-800 p-6 rounded-lg shadow-lg sticky top-16 h-fit">
+          <h2 class="text-xl font-bold mb-4 text-accent">Contents</h2>
+          <div class="mb-6">
+            <input
+              type="text"
+              id="searchInput"
+              class="w-full p-3 rounded-lg bg-gray-700 text-light placeholder-gray-400"
+              placeholder="Search in this doc"
+            />
+          </div>
+          <ul id="toc" class="space-y-2 overflow-y-auto">
+            {content.split('\n').map((line, index) => {
+              if (line.startsWith('# ')) {
+                return (
+                  <li key={index}>
+                    <a
+                      href={`#section-${index}`}
+                      class="block text-lg text-gray-300 hover:text-accent transition-all"
+                    >
+                      {line.slice(2)} {/* Skip the '# ' part of the header */}
+                    </a>
+                  </li>
+                );
+              } else if (line.startsWith('## ')) {
+                return (
+                  <li key={index}>
+                    <a
+                      href={`#section-${index}`}
+                      class="block pl-4 text-lg text-gray-300 hover:text-accent transition-all"
+                    >
+                      {line.slice(3)} {/* Skip the '## ' part of the header */}
+                    </a>
+                  </li>
+                );
+              }
+            })}
+          </ul>
+        </div>
+
+        <!-- Main Content Section -->
+        <div class="w-full lg:w-3/4 space-y-12">
+          <h1 class="text-5xl font-extrabold mb-4">{doc.data.title}</h1>
+          <p class="text-lg text-gray-400 mb-6">{doc.data.description}</p>
+
+          <div class="prose lg:prose-xl text-gray-200">
+            {/* Render markdown content */}
+            {content.split('\n').map((line, index) => {
+              if (line.startsWith('# ')) {
+                return (
+                  <h1 id={`section-${index}`} key={index}>
+                    {line.slice(2)} {/* Skip the '# ' part of the header */}
+                  </h1>
+                );
+              } else if (line.startsWith('## ')) {
+                return (
+                  <h2 id={`section-${index}`} key={index} class="mt-10">
+                    {line.slice(3)} {/* Skip the '## ' part of the header */}
+                  </h2>
+                );
+              } else {
+                return <p key={index}>{line}</p>;
+              }
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('searchInput');
+      const contentSections = document.querySelectorAll('.prose h1, .prose h2, .prose p');
+      const tocLinks = document.querySelectorAll('#toc a');
+
+      searchInput.addEventListener('input', (event) => {
+        const query = event.target.value.toLowerCase();
+
+        contentSections.forEach((section) => {
+          const text = section.textContent.toLowerCase();
+          section.style.display = text.includes(query) ? 'block' : 'none';
+        });
+
+        tocLinks.forEach((link) => {
+          const section = document.querySelector(link.getAttribute('href'));
+          link.style.display = section && section.style.display !== 'none' ? 'block' : 'none';
+        });
+      });
+    });
+  </script>
+</Layout>

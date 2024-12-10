@@ -8,19 +8,33 @@ import Footer from '../components/Footer';
 
 const exampleCode = `package main
 
-import "github.com/LetsFocus/configManager"
+import (
+    "fmt"
+    "log"
+    "github.com/LetsFocus/configManager"
+)
 
-type Config struct {
-    DBUrl      string \`env:"DB_URL" default:"postgres://localhost:5432"\`
-    APIToken   string \`env:"API_TOKEN" required:"true"\`
+type AppConfig struct {
+    DBUrl      string \`env:"DB_URL" default:"postgres://localhost:5432" required:"true"\`
+    APIToken   string \`env:"API_TOKEN"\`
     ServerPort int    \`env:"SERVER_PORT" default:"8080"\`
+    DebugMode  bool   \`env:"DEBUG_MODE" default:"false"\`
 }
 
 func main() {
-    var config Config
-    if err := configManager.Load(&config); err != nil {
-        panic(err)
+    // Create a new config manager
+    cm := configManager.New()
+	
+    // Define a struct to hold your configuration
+    var config AppConfig
+
+    // Unmarshal data from environment variables into the config struct
+    err = cm.Unmarshal(&config)
+    if err != nil {
+        log.Fatal(err)
     }
+
+    fmt.Println("Configs Loaded")
 }`;
 ---
 

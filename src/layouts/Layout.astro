@@ -1,5 +1,9 @@
 ---
 import Navigation from '../components/Navigation';
+import { Prism } from 'prismjs';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-markup';
 
 interface Props {
   title: string;
@@ -12,6 +16,8 @@ const { title } = Astro.props;
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
+        <link rel="stylesheet" href="../styles/global.css" />
+
     <meta name="description" content="Modern configuration management for Go applications" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -23,5 +29,12 @@ const { title } = Astro.props;
     <div class="fixed inset-0 -z-10 h-full w-full bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px]"></div>
     <Navigation client:load />
     <slot />
+    <script>
+      // Highlight code blocks after the page loads
+      document.addEventListener('DOMContentLoaded', () => {
+        Prism.highlightAll();
+      });
+    </script>
   </body>
+  
 </html>
